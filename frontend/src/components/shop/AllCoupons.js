@@ -41,7 +41,9 @@ const AllCoupons = () => {
 
   const handleDelete = async (id) => {
     axios
-      .delete(`${baseUrl}/coupon/delete-coupon/${id}`, { withCredentials: true })
+      .delete(`${baseUrl}/coupon/delete-coupon/${id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         toast.success("Coupon code deleted succesfully!");
       });
@@ -155,7 +157,6 @@ const AllCoupons = () => {
                 </h5>
                 {/* create coupoun code */}
                 <form onSubmit={handleSubmit} aria-required={true}>
-                  
                   <div>
                     <label className="pb-2">
                       Name <span className="text-red-500">*</span>
@@ -169,6 +170,25 @@ const AllCoupons = () => {
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Enter your coupon code name..."
                     />
+                  </div>
+                  <br />
+                  <div>
+                    <label className="pb-2">Selected Product</label>
+                    <select
+                      className="w-full mt-2 border h-[30px] rounded-[5px]"
+                      value={selectedProducts}
+                      onChange={(e) => setSelectedProducts(e.target.value)}
+                    >
+                      <option value="Choose your selected products">
+                        Choose a selected product
+                      </option>
+                      {products &&
+                        products.map((i) => (
+                          <option value={i.name} key={i.name}>
+                            {i.name}
+                          </option>
+                        ))}
+                    </select>
                   </div>
                   <br />
                   <div>
@@ -209,25 +229,6 @@ const AllCoupons = () => {
                       onChange={(e) => setMaxAmount(e.target.value)}
                       placeholder="Enter your coupon code max amount..."
                     />
-                  </div>
-                  <br />
-                  <div>
-                    <label className="pb-2">Selected Product</label>
-                    <select
-                      className="w-full mt-2 border h-[30px] rounded-[5px]"
-                      value={selectedProducts}
-                      onChange={(e) => setSelectedProducts(e.target.value)}
-                    >
-                      <option value="Choose your selected products">
-                        Choose a selected product
-                      </option>
-                      {products &&
-                        products.map((i) => (
-                          <option value={i.name} key={i.name}>
-                            {i.name}
-                          </option>
-                        ))}
-                    </select>
                   </div>
                   <br />
                   <div>

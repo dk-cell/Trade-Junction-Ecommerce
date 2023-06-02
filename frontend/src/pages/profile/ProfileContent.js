@@ -10,7 +10,7 @@ import styles from "../../style/styles";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
-import { MdOutlineTrackChanges } from "react-icons/md";
+import { MdTrackChanges } from "react-icons/md";
 import {
   deleteUserAddress,
   updatUserAddress,
@@ -192,26 +192,14 @@ const ProfileContent = ({ active }) => {
 };
 
 const RenderAllOrder = () => {
-  const {orders} = useSelector((state)=>state.orders)
-  const {user} = useSelector((state)=>state.user)
-  const dispatch = useDispatch()
+  const { orders } = useSelector((state) => state.orders);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const params = useParams();
 
-  useEffect(()=>{
-    dispatch(getAllOrdersOfUser(user._id))
-  },[])
-  // const orders = [
-  //   {
-  //     _id: "jaksdkfashkfjsh",
-  //     orderItems: [
-  //       {
-  //         name: "Iphone 14 pro max",
-  //       },
-  //     ],
-  //     totalPrice: 120,
-  //     orderStatus: "processing",
-  //   },
-  // ];
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -264,7 +252,7 @@ const RenderAllOrder = () => {
   ];
 
   const row = [];
-
+  console.log(">>>>>>>>>>>>>", orders);
   orders &&
     orders.forEach((item) => {
       row.push({
@@ -289,19 +277,17 @@ const RenderAllOrder = () => {
 };
 
 const RenderAllRefundOrder = () => {
-  const params = useParams();
-  const orders = [
-    {
-      _id: "refundallorder",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.orders);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
+
+  const eligibleOrders =
+    orders && orders.filter((item) => item.status === "Processing refund");
+
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -310,11 +296,6 @@ const RenderAllRefundOrder = () => {
       headerName: "Status",
       minWidth: 130,
       flex: 0.7,
-      //   cellClassName: (params) => {
-      //     return params.getValue(params.id, "status") === "Delivered"
-      //       ? "greenColor"
-      //       : "redColor";
-      //   },
     },
     {
       field: "itemsQty",
@@ -355,13 +336,13 @@ const RenderAllRefundOrder = () => {
 
   const row = [];
 
-  orders &&
-    orders.forEach((item) => {
+  eligibleOrders &&
+    eligibleOrders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item?.orderItems?.length,
+        itemsQty: item.cart.length,
         total: "US$ " + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 
@@ -380,18 +361,14 @@ const RenderAllRefundOrder = () => {
 
 const TrackOrder = () => {
   const params = useParams();
-  const orders = [
-    {
-      _id: "refundallorder",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.orders);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
+
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -432,9 +409,9 @@ const TrackOrder = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/user/order/${params.id}`}>
+            <Link to={`/user/track/order/${params.id}`}>
               <Button>
-                <MdOutlineTrackChanges size={20} />
+                <MdTrackChanges size={20} />
               </Button>
             </Link>
           </>
@@ -449,9 +426,9 @@ const TrackOrder = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item?.orderItems?.length,
+        itemsQty: item?.cart?.length,
         total: "US$ " + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 
@@ -495,7 +472,7 @@ const UpdatePassword = () => {
   return (
     <div className="w-full px-5">
       <h1 className="block text-[25px] text-center font-[600] text-[#000000ba] pb-2">
-      Update Password
+        Update Password
       </h1>
       <div className="w-full">
         <form
@@ -544,7 +521,6 @@ const UpdatePassword = () => {
     </div>
   );
 };
-
 
 const Address = () => {
   const [open, setOpen] = useState(false);

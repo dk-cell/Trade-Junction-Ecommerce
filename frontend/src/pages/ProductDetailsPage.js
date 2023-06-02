@@ -3,25 +3,29 @@ import ProductDetails from "../components/Product/ProductDetails";
 import Header from "../components/Layout/Header.js";
 import Footer from "../components/Layout/Footer.js";
 import ShowRelatedProduct from "../components/ShowRelatedProduct";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { product } from "../static/data.js";
 import { useSelector } from "react-redux";
 const ProductDetailsPage = () => {
-  const { id } = useParams();
   const { allProducts } = useSelector((state) => state.products);
-  const { name } = useParams();
-  const [data, setData] = useState("");
+  const { allEvents } = useSelector((state) => state.events);
+  const { id } = useParams();
+  const [data, setData] = useState(null);
+  const [searchParams] = useSearchParams();
+  const eventData = searchParams.get("isEvent");
+
+ 
 
   // const productName = name.replace(/-/g, " ");
-
+console.log(id)
   useEffect(() => {
-    // if (eventData !== null) {
-    //   const data = allEvents && allEvents.find((i) => i._id === id);
-    //   setData(data);
-    // } else {
+    if (eventData) {
+      const data = allEvents && allEvents.find((i) => i._id === id);
+      setData(data);
+    } else {
       const data = allProducts && allProducts.find((i) => i._id === id);
       setData(data);
-    // }
+    }
   }, [allProducts]);
   return (
     <div>

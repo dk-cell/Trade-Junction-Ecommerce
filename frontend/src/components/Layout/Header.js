@@ -20,6 +20,7 @@ import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeader }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isSeller } = useSelector((state) => state.seller);
   const { cart } = useSelector((state) => state.carts);
   const { wishlist } = useSelector((state) => state.wishlists);
   const { allProducts } = useSelector((state) => state.products);
@@ -33,7 +34,8 @@ const Header = ({ activeHeader }) => {
 
   useEffect(() => {}, []);
 
-  console.log("=====>", isAuthenticated);
+
+  console.log("=====>s", isSeller);
 
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
@@ -70,7 +72,7 @@ const Header = ({ activeHeader }) => {
             <input
               type="text"
               placeholder="search product..."
-              // value={searchedData}
+              value={searchedData}
               onChange={handleSearch}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded"
             />
@@ -103,7 +105,7 @@ const Header = ({ activeHeader }) => {
           <div className={`${styles.button} md:min-w-[25%]`}>
             <Link to="/create-shop">
               <h1 className="text-[#fff] flex items-center">
-                Sell on TradeJuction <IoIosArrowForward className="ml-1" />
+                {isSeller ? "Go to Shop" : "Sell on TradeJuction"} <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
           </div>
@@ -238,7 +240,7 @@ const Header = ({ activeHeader }) => {
           <div
             className={`fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0`}
           >
-            <div className="fixed w-[70%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
+            <div className="fixed w-[70%] bg-[#c3c4c7] h-screen top-0 left-0 z-10 overflow-y-scroll">
               <div className="w-full justify-between flex pr-3">
                 <div>
                   <div
@@ -271,9 +273,9 @@ const Header = ({ activeHeader }) => {
                     {searchedData.map((i) => {
                       const d = i.name;
 
-                      const Product_name = d.replace(/\s+/g, "-");
+                      // const Product_name = d.replace(/\s+/g, "-");
                       return (
-                        <Link to={`/product/${Product_name}`}>
+                        <Link to={`/product/${i._id}`}>
                           <div className="flex items-center">
                             <img
                               src={i.image_Url[0].url}
@@ -293,7 +295,7 @@ const Header = ({ activeHeader }) => {
               <div className={`${styles.button} ml-4 !rounded-[4px] w-[50%] items-center justify-center flex` }>
                 <Link to="/create-shop">
                   <h1 className="text-[#fff] flex items-center">
-                    Sell on TradeJuction <IoIosArrowForward className="ml-1" />
+                  {isSeller ? "Go to Shop" : "Sell on TradeJuction"} <IoIosArrowForward className="ml-1" />
                   </h1>
                 </Link>
               </div>

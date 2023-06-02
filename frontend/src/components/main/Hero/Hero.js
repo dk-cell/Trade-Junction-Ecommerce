@@ -26,7 +26,7 @@ const Hero = () => {
         <h1
           className={`text-[35px] leading-[1.2] md:text-[60px] text-[#fff] font-[600] capitalize`}
         >
-          Best Collection for <br /> home Decoration
+          Experience the Future <br /> in Your Hands
         </h1>
         <p className="pt-5 text-[16px] font-[Poppins] font-[400] text-[#cfcabe]">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Beatae,
@@ -35,7 +35,7 @@ const Hero = () => {
           <br /> aliquam deserunt officia. Dolorum saepe nulla provident.
         </p>
         <Link to="/products" className="inline-block">
-          <div className={`${styles.button} bg-[#cfcabe] mt-5 `}>
+          <div className={`${styles.button} !bg-[#cfcabe] mt-5 `}>
             <span className="text-[#000] font-[Poppins] text-[18px]">
               Shop Now
             </span>

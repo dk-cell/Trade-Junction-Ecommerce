@@ -113,8 +113,8 @@ const OrderDetails = () => {
       </div>
       <br />
       <br />
-      <div className="w-full 800px:flex items-center">
-        <div className="w-full 800px:w-[60%]">
+      <div className="w-full md:flex items-center">
+        <div className="w-full md:w-[60%]">
           <h4 className="pt-3 text-[20px] font-[600]">Shipping Address:</h4>
           <h4 className="pt-3 text-[20px]">
             {data?.shippingAddress.address1 +
@@ -125,10 +125,10 @@ const OrderDetails = () => {
           <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4>
           <h4 className=" text-[20px]">{data?.user?.phoneNumber}</h4>
         </div>
-        <div className="w-full 800px:w-[40%]">
+        <div className="w-full md:w-[40%]">
           <h4 className="pt-3 text-[20px]">Payment Info:</h4>
           <h4>
-            Status:{" "}
+            Status:
             {data?.paymentInfo?.status ? data?.paymentInfo?.status : "Not Paid"}
           </h4>
         </div>

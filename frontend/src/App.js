@@ -23,16 +23,20 @@ import ActivationPage from "./pages/ActivationPage";
 import ShopActivationPage from "./pages/shop/ShopActivationPage";
 import ShopLoginPage from "./pages/shop/ShopLoginPage";
 import ShopHomePage from "./pages/shop/ShopHomePage";
+import ShopSettings from "./pages/shop/ShopSettings.js";
 import ShopCreatePage from "./pages/shop/ShopCreatePage";
 import SellerDashboardPage from "./pages/shop/SellerDashboardPage";
 import ShopCreateProduct from "./pages/shop/ShopCreateProduct";
 import GetAllShopProduct from "./pages/shop/GetAllShopProduct";
-import AllOrderOfShop from "./pages/shop/AllOrderOfShop"
+import AllOrderOfShop from "./pages/shop/AllOrderOfShop";
 import ShopCreateEvents from "./pages/shop/ShopCreateEvents";
 import ShopAllEvents from "./pages/shop/ShopAllEvents";
 import ShopAllCoupons from "./pages/shop/ShopAllCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
-import ShopOrderDetails from "./pages/shop/ShopOrderDetails.js"
+import ShopOrderDetails from "./pages/shop/ShopOrderDetails";
+import ShopAllRefunds from "./pages/shop/ShopAllRefunds";
+import ShopWithdrawMoneyPage from "./pages/shop/ShopWithdrawMoneyPage.js";
+import UserOrderDetails from "./components/order/UserOrderDetails";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,6 +52,7 @@ import { baseUrl } from "./constant";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
+import TrackOrderPage from "./pages/TrackOrderPage";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -106,11 +111,29 @@ const App = () => {
           }
         />
         <Route path="/order/success" element={<OrderSuccessPage />} />
+
         <Route
           path="/profile"
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/order/:id"
+          element={
+            <ProtectedRoute>
+              <UserOrderDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/user/track/order/:id"
+          element={
+            <ProtectedRoute>
+              <TrackOrderPage />
             </ProtectedRoute>
           }
         />
@@ -123,6 +146,14 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopHomePage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/shop/settings"
+          element={
+            <SellerProtectedRoute>
+              <ShopSettings />
             </SellerProtectedRoute>
           }
         />
@@ -159,7 +190,7 @@ const App = () => {
           }
         />
 
-<Route
+        <Route
           path="/order/:id"
           element={
             <SellerProtectedRoute>
@@ -191,6 +222,23 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopAllCoupons />
+            </SellerProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard-refunds"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllRefunds />
+            </SellerProtectedRoute>
+          }
+        />
+             <Route
+          path="/dashboard-withdraw-money"
+          element={
+            <SellerProtectedRoute>
+              <ShopWithdrawMoneyPage />
             </SellerProtectedRoute>
           }
         />

@@ -18,8 +18,9 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../redux/actions/wishlist";
+import Ratings from "../../Product/Ratings";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, isEvent }) => {
   const { cart } = useSelector((state) => state.carts);
   const { wishlist } = useSelector((state) => state.wishlists);
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const ProductCard = ({ data }) => {
   return (
     <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer ">
       <div className="flex justify-end"></div>
-      <Link to={`/product/${data._id}`}>
+      <Link to={`${isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
         <img
           src={`${backendUrl}${data.images && data.images[0]}`}
           alt=""
@@ -77,31 +78,12 @@ const ProductCard = ({ data }) => {
       <Link to={`/shop/preview/${data?.shop._id}`}>
         <h5 className={`${styles.shop_name}`}>{data?.shop.name}</h5>
       </Link>
-      <Link to={`/product/${data._id}`}>
+      <Link to={`${isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
         <h4 className="pb-3 font-[500]">
           {data.name.length > 35 ? data.name.slice(0, 35) + "..." : data.name}
         </h4>
         <div className="flex">
-          <AiFillStar
-            className="mr-2 cursor-pointer"
-            color="#F6BA00"
-            size={20}
-          />
-          <AiFillStar
-            className="mr-2 cursor-pointer"
-            color="#F6BA00"
-            size={20}
-          />
-          <AiFillStar
-            className="mr-2 cursor-pointer"
-            color="#F6BA00"
-            size={20}
-          />
-          <AiOutlineStar
-            className="mr-2 cursor-pointer"
-            color="#F6BA00"
-            size={20}
-          />
+          <Ratings rating={data?.ratings} />
         </div>
 
         <div className=" py-2 flex items-center justify-between">
@@ -118,7 +100,7 @@ const ProductCard = ({ data }) => {
           </div>
 
           <span className="font-[400] text-[17px] text-[#68d284]">
-            {data.sold_out} sold
+            {data?.sold_out} sold
           </span>
         </div>
       </Link>

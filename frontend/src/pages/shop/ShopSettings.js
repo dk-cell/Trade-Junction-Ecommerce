@@ -1,21 +1,21 @@
 import React from "react";
+import UpdateShopSetting from "../../components/shop/UpdateShopSetting";
 import SellerDashboardHeader from "../../components/shop/Layout/SellerDashboardHeader";
 import ShopSidebar from "../../components/shop/Layout/ShopSidebar";
-import DashboardMain from "../../components/shop/DashboardMain";
-const SellerDashboardPage = () => {
+const ShopSettings = () => {
   return (
     <div>
       <SellerDashboardHeader />
-      <div className="flex items-start justify-between w-full">
+      <div className="flex justify-between w-full">
         <div className="w-[80px] md:w-[330px]">
-          <ShopSidebar active={1} />
+          <ShopSidebar active={11} />
         </div>
-        <div className="w-full justify-center flex">
-          <DashboardMain />
+        <div className="w-full justify-center flex mt-10">
+          <UpdateShopSetting />
         </div>
       </div>
     </div>
   );
 };
 
-export default SellerDashboardPage;
+export default ShopSettings;

@@ -4,26 +4,26 @@ import { Link, useParams } from "react-router-dom";
 import { getAllProductsOfShop } from "../../redux/actions/product";
 import styles from "../../style/styles";
 import { backendUrl } from "../../constant";
-// import Ratings from "../Products/Ratings";
+import { getAllEventsShop } from "../../redux/actions/event";
 import ProductCard from "../../components/main/ProductCard/ProductCard";
-import { product } from "../../static/data";
-// import { getAllEventsShop } from "../../redux/actions/event";
+import Ratings from "../../components/Product/Ratings";
+
 
 const ShopProfileData = ({ isOwner }) => {
-    const { products } = useSelector((state) => state.products);
-    // const { events } = useSelector((state) => state.events);
+  const { products } = useSelector((state) => state.products);
+  const { events } = useSelector((state) => state.events);
   const { id } = useParams();
-  const events = [];
   const dispatch = useDispatch();
-// console.log("heter i", products)
-    useEffect(() => {
-      dispatch(getAllProductsOfShop(id));
-      // dispatch(getAllEventsShop(id));
-    }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllProductsOfShop(id));
+    dispatch(getAllEventsShop(id));
+  }, [dispatch]);
 
   const [active, setActive] = useState(1);
 
-  const allReviews = product && product.map((item) => item.reviews).flat();
+  const allReviews =
+    products && products.map((product) => product.reviews).flat();
 
   return (
     <div className="w-full">
@@ -75,7 +75,7 @@ const ShopProfileData = ({ isOwner }) => {
       {active === 1 && (
         <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
           {products &&
-            products?.map((i, index) => (
+            products.map((i, index) => (
               <ProductCard data={i} key={index} isShop={true} />
             ))}
         </div>
@@ -106,16 +106,16 @@ const ShopProfileData = ({ isOwner }) => {
         <div className="w-full">
           {allReviews &&
             allReviews.map((item, index) => (
-              <div className="w-full flex my-4">
+              <div className="w-full flex my-4" key={index}>
                 <img
-                  src={`${backendUrl}/${item.user.avatar}`}
+                   src={`${backendUrl}${item?.user?.avatar}`}
                   className="w-[50px] h-[50px] rounded-full"
                   alt=""
                 />
                 <div className="pl-2">
                   <div className="flex w-full items-center">
                     <h1 className="font-[600] pr-2">{item.user.name}</h1>
-                    {/* <Ratings rating={item.rating} /> */}
+                    <Ratings rating={item.rating} />
                   </div>
                   <p className="font-[400] text-[#000000a7]">{item?.comment}</p>
                   <p className="text-[#000000a7] text-[14px]">{"2days ago"}</p>
