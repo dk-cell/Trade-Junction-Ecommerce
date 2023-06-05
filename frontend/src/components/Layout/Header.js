@@ -34,7 +34,6 @@ const Header = ({ activeHeader }) => {
 
   useEffect(() => {}, []);
 
-
   console.log("=====>s", isSeller);
 
   window.addEventListener("scroll", () => {
@@ -105,7 +104,8 @@ const Header = ({ activeHeader }) => {
           <div className={`${styles.button} md:min-w-[25%]`}>
             <Link to="/create-shop">
               <h1 className="text-[#fff] flex items-center">
-                {isSeller ? "Go to Shop" : "Sell on TradeJuction"} <IoIosArrowForward className="ml-1" />
+                {isSeller ? "Go to Shop" : "Sell on TradeJuction"}{" "}
+                <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
           </div>
@@ -292,10 +292,13 @@ const Header = ({ activeHeader }) => {
               </div>
 
               <Navbar active={activeHeader} />
-              <div className={`${styles.button} ml-4 !rounded-[4px] w-[50%] items-center justify-center flex` }>
+              <div
+                className={`${styles.button} ml-4 !rounded-[4px] w-[50%] items-center justify-center flex`}
+              >
                 <Link to="/create-shop">
                   <h1 className="text-[#fff] flex items-center">
-                  {isSeller ? "Go to Shop" : "Sell on TradeJuction"} <IoIosArrowForward className="ml-1" />
+                    {isSeller ? "Go to Shop" : "Sell on TradeJuction"}{" "}
+                    <IoIosArrowForward className="ml-1" />
                   </h1>
                 </Link>
               </div>

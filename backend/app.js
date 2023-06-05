@@ -30,6 +30,8 @@ const event = require("./controller/eventController");
 const coupon = require("./controller/couponController");
 const payment = require("./controller/paymentController");
 const order = require("./controller/orderController");
+const chat = require("./controller/chatController");
+const message = require("./controller/messageController");
 
 app.use("/test", (req, res) => {
   res.send("Hello world!");
@@ -42,6 +44,8 @@ app.use("/api/v2/event", event);
 app.use("/api/v2/coupon", coupon);
 app.use("/api/v2/payment", payment);
 app.use("/api/v2/order", order);
+app.use("/api/v2/chat", chat);
+app.use("/api/v2/message", message);
 
 app.get("/", (req, res) => {
   res.send("Server Running...");

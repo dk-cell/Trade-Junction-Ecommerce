@@ -96,19 +96,19 @@ const ProductDetails = ({ data }) => {
       const userId = user._id;
       const sellerId = data.shop._id;
       await axios
-        .post(`${baseUrl}/conversation/create-new-conversation`, {
+        .post(`${baseUrl}/chat/create-new-chat`, {
           groupTitle,
           userId,
           sellerId,
         })
         .then((res) => {
-          navigate(`/inbox?${res.data.conversation._id}`);
+          navigate(`/inbox?${res.data.chat._id}`);
         })
         .catch((error) => {
           toast.error(error.response.data.message);
         });
     } else {
-      toast.error("Please login to create a conversation");
+      toast.error("Please login to chat");
     }
   };
 

@@ -35,7 +35,8 @@ import ShopAllCoupons from "./pages/shop/ShopAllCoupons";
 import ShopPreviewPage from "./pages/shop/ShopPreviewPage";
 import ShopOrderDetails from "./pages/shop/ShopOrderDetails";
 import ShopAllRefunds from "./pages/shop/ShopAllRefunds";
-import ShopWithdrawMoneyPage from "./pages/shop/ShopWithdrawMoneyPage.js";
+import ShopWithdrawMoneyPage from "./pages/shop/ShopWithdrawMoneyPage";
+import ShopInboxPage from "./pages/shop/ShopInboxPage";
 import UserOrderDetails from "./components/order/UserOrderDetails";
 
 import { ToastContainer } from "react-toastify";
@@ -53,6 +54,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import TrackOrderPage from "./pages/TrackOrderPage";
+import UserInbox from "./pages/profile/UserInbox";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -117,6 +119,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inbox"
+          element={
+            <ProtectedRoute>
+              <UserInbox />
             </ProtectedRoute>
           }
         />
@@ -234,11 +244,19 @@ const App = () => {
             </SellerProtectedRoute>
           }
         />
-             <Route
+        <Route
           path="/dashboard-withdraw-money"
           element={
             <SellerProtectedRoute>
               <ShopWithdrawMoneyPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-messages"
+          element={
+            <SellerProtectedRoute>
+              <ShopInboxPage />
             </SellerProtectedRoute>
           }
         />
