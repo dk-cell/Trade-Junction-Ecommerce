@@ -252,7 +252,7 @@ const RenderAllOrder = () => {
   ];
 
   const row = [];
-  console.log(">>>>>>>>>>>>>", orders);
+
   orders &&
     orders.forEach((item) => {
       row.push({

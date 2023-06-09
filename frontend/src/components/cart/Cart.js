@@ -11,13 +11,14 @@ import { toast } from "react-toastify";
 
 const Cart = ({ setOpenCart }) => {
   const { cart } = useSelector((state) => state.carts);
+  console.log("====>", cart);
   const dispatch = useDispatch();
 
   const handleRemove = (data) => {
     dispatch(removeFromCart(data));
   };
   const totalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discountPrice,
+    (acc, item) => acc + (item?.qty ? item.qty : 1) * item.discountPrice,
     0
   );
 
@@ -25,8 +26,8 @@ const Cart = ({ setOpenCart }) => {
     dispatch(addTocart(data));
   };
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10 ">
-      <div className="fixed top-0 right-0 min-h-full w-[25%] h-[100%] bg-white flex flex-col justif-between shadow-sm">
+    <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
+      <div className="fixed top-0 right-0 min-h-full w-[75%] md:w-[25%] h-[100%] bg-white flex flex-col justif-between shadow-sm">
         <div className="flex w-full justify-end pt-5 pr-5">
           <RxCross1
             size={25}
@@ -67,7 +68,7 @@ const Cart = ({ setOpenCart }) => {
               <Link to="/checkout">
                 <div className="h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]">
                   <h1 className="text-[#fff] text-[18px] font-[600]">
-                    Checkout now ({totalPrice})
+                    Checkout now (${totalPrice})
                   </h1>
                 </div>
               </Link>
@@ -108,7 +109,7 @@ const RenderCart = ({ data, handleQtyChange, handleRemove }) => {
           >
             <HiPlus size={18} color="#fff" />
           </div>
-          <span className="pl-[8px]">{data.qty}</span>
+          <span className="pl-[8px]">{`${data?.qty ? data.qty : 1}` }</span>
           <div
             className="bg-[#a7abb14f] rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer"
             onClick={() => handleDecrement(data)}

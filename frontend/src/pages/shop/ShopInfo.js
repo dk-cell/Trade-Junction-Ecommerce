@@ -6,6 +6,7 @@ import Loader from "../../Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { backendUrl, baseUrl } from "../../constant";
 import { getAllProductsOfShop } from "../../redux/actions/product";
+import {toast} from "react-toastify"
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
@@ -23,15 +24,19 @@ const ShopInfo = ({ isOwner }) => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+       toast.error(error);
         setIsLoading(false);
       });
   }, []);
 
   const logoutHandler = async () => {
-    axios.get(`${baseUrl}/shop/logout`, {
-      withCredentials: true,
-    });
+    axios
+      .get(`${baseUrl}/shop/logout`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        localStorage.clear();
+      });
     window.location.reload();
   };
 

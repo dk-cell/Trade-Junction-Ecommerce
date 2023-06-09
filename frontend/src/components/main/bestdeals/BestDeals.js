@@ -11,7 +11,7 @@ const BestDeals = () => {
     const allProductsData = allProducts ? [...allProducts] : [];
     const sortedData = allProductsData?.sort((a, b) => b.sold_out - a.sold_out);
     const firstFive = sortedData && sortedData.slice(0, 5);
-    console.log("->", allProducts)
+
 
     setData(firstFive);
   }, []);

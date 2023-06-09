@@ -19,7 +19,7 @@ const CreateShop = () => {
   const [visible, setVisible] = useState(false);
 
   const handleSubmit = async (e) => {
-    console.log(e);
+   
     e.preventDefault();
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 

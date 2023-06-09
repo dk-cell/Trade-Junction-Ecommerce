@@ -21,6 +21,7 @@ const ProfileSidebar = ({ active, setActive }) => {
     axios
       .get(`${baseUrl}/user/logout`, { withCredentials: true })
       .then((res) => {
+        localStorage.clear();
         toast.success(res.data.message);
         navigate("/login");
         window.location.reload(true);

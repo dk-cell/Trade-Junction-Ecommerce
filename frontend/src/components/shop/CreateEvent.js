@@ -28,7 +28,7 @@ const CreateEvent = () => {
     const minEndDate = new Date(startDate.getTime() + 3 * 24 * 60 * 60 * 1000);
     setStartDate(startDate);
     setEndDate(null);
-    console.log(typeof minEndDate);
+
     // document.getElementById("end-date").min = minEndDate.toISOString.slice(0,10);
   };
 

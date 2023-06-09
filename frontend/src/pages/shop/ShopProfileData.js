@@ -8,7 +8,6 @@ import { getAllEventsShop } from "../../redux/actions/event";
 import ProductCard from "../../components/main/ProductCard/ProductCard";
 import Ratings from "../../components/Product/Ratings";
 
-
 const ShopProfileData = ({ isOwner }) => {
   const { products } = useSelector((state) => state.products);
   const { events } = useSelector((state) => state.events);
@@ -63,7 +62,7 @@ const ShopProfileData = ({ isOwner }) => {
             <div>
               <Link to="/dashboard">
                 <div className={`${styles.button} !rounded-[4px] h-[42px]`}>
-                  <span className="text-[#fff]">Go Dashboard</span>
+                  <span className="text-[#fff]">Dashboard</span>
                 </div>
               </Link>
             </div>
@@ -108,7 +107,7 @@ const ShopProfileData = ({ isOwner }) => {
             allReviews.map((item, index) => (
               <div className="w-full flex my-4" key={index}>
                 <img
-                   src={`${backendUrl}${item?.user?.avatar}`}
+                  src={`${backendUrl}${item?.user?.avatar}`}
                   className="w-[50px] h-[50px] rounded-full"
                   alt=""
                 />

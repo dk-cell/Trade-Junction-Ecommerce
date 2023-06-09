@@ -59,7 +59,7 @@ const AllEvents = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
-        console.log("->", params.id);
+
         return (
           <>
             <Link to={`/product/${params.id}`}>

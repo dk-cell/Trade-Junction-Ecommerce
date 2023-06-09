@@ -45,7 +45,7 @@ export const eventReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
-  // get all events
+  // get all
   getAlleventsRequest: (state) => {
     state.isLoading = true;
   },

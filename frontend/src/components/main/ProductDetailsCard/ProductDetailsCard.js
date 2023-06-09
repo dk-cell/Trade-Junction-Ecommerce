@@ -57,7 +57,6 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const handleWishlist = (id) => {
     if (!click) {
-      console.log(data);
       dispatch(addToWishlist(data));
       toast.success("Item added to wishlist successfully!");
     } else {

@@ -55,7 +55,14 @@ import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import TrackOrderPage from "./pages/TrackOrderPage";
 import UserInbox from "./pages/profile/UserInbox";
-
+import AdminProtectedRoute from "./protected_route/AdminProtectedRoute";
+import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
+import AdminDashboardUsers from "./pages/Admin/AdminDashboardUsers";
+import AdminDashboardSellers from "./pages/Admin/AdminDashboardSellers";
+import AdminDashboardOrders from "./pages/Admin/AdminDashboardOrders";
+import AdminDashboardProducts from "./pages/Admin/AdminDashboardProducts";
+import AdminDashboardEvents from "./pages/Admin/AdminDashboardEvents";
+import AdminDashboardWithdraw from "./pages/Admin/AdminDashboardWithdraw";
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
 
@@ -258,6 +265,65 @@ const App = () => {
             <SellerProtectedRoute>
               <ShopInboxPage />
             </SellerProtectedRoute>
+          }
+        />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardPage />
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin-users"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsers />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-sellers"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardSellers />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-orders"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardOrders />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-products"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardProducts/>
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-events"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardEvents />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-withdraw-request"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardWithdraw />
+            </AdminProtectedRoute>
           }
         />
       </Routes>

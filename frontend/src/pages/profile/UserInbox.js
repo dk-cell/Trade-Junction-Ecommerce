@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { backendUrl, baseUrl } from "../../constant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
 import Header from "../../components/Layout/Header";
 import styles from "../../style/styles";
 import socketIO from "socket.io-client";
 import { format } from "timeago.js";
-const ENDPOINT = "ws://localhost:4000/";
+const ENDPOINT = "https://tradejunction-socket-io.onrender.com/";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInbox = () => {
@@ -25,9 +25,6 @@ const UserInbox = () => {
   const [activeStatus, setActiveStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
-
-  console.log("====>", user);
-
   useEffect(() => {
     socketId.on("getMessage", (data) => {
       setArrivalMessage({
@@ -333,11 +330,11 @@ const SellerInbox = ({
 
   {
     messages.map((item) => {
-        console.log(item.sender)
+      console.log(item.sender);
       if (item.sender[0] === userId) {
         console.log(item.text);
-      }else{
-        console.log("nothing to show")
+      } else {
+        console.log("nothing to show");
       }
     });
   }
@@ -346,6 +343,13 @@ const SellerInbox = ({
       {/* message header */}
       <div className="w-full flex p-3 items-center justify-between bg-slate-200">
         <div className="flex">
+          <div className="flex justify-center items-center mr-3">
+            <AiOutlineArrowLeft
+              size={20}
+              className="cursor-pointer"
+              onClick={() => setOpen(false)}
+            />
+          </div>
           <img
             src={`${backendUrl}${userData?.avatar}`}
             alt=""
@@ -356,11 +360,6 @@ const SellerInbox = ({
             <h1>{activeStatus ? "Active Now" : ""}</h1>
           </div>
         </div>
-        <AiOutlineArrowRight
-          size={20}
-          className="cursor-pointer"
-          onClick={() => setOpen(false)}
-        />
       </div>
 
       {/* messages */}

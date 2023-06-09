@@ -32,6 +32,7 @@ const payment = require("./controller/paymentController");
 const order = require("./controller/orderController");
 const chat = require("./controller/chatController");
 const message = require("./controller/messageController");
+const withdraw = require("./controller/withdrawController")
 
 app.use("/test", (req, res) => {
   res.send("Hello world!");
@@ -46,6 +47,7 @@ app.use("/api/v2/payment", payment);
 app.use("/api/v2/order", order);
 app.use("/api/v2/chat", chat);
 app.use("/api/v2/message", message);
+app.use("/api/v2/withdraw", withdraw);
 
 app.get("/", (req, res) => {
   res.send("Server Running...");

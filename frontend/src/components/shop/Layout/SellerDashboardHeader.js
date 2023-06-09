@@ -22,7 +22,7 @@ const SellerDashboardHeader = () => {
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
-          <Link to="/dashboard/cupouns" className="md:block hidden">
+          <Link to="/dashboard-coupons" className="md:block hidden">
             <AiOutlineGift
               color="#fff"
               size={30}

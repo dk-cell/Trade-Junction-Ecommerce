@@ -8,17 +8,13 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendJwtToken = require("../utils/SendJwtToken");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { isAuthenticated } = require("../middleware/auth");
+const { isAuthenticated,isAdmin } = require("../middleware/auth");
 
 const router = express.Router();
 
 //regist user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   const { name, email, password } = req.body;
-  console.log("body ", name);
-  console.log("body ==>", req.file);
-
-  console.log(name, email, password);
   const EmailId = await User.findOne({ email });
   if (EmailId) {
     const filename = req.file.filename;
@@ -289,9 +285,6 @@ router.delete(
     try {
       const userId = req.user._id;
       const addressId = req.params.id;
-
-      console.log(addressId);
-
       await User.updateOne(
         {
           _id: userId,
@@ -343,7 +336,7 @@ router.put(
   })
 );
 
-// find user infoormation with the userId
+// find user information with the userId
 router.get(
   "/user-info/:id",
   catchAsyncErrors(async (req, res, next) => {
@@ -353,6 +346,53 @@ router.get(
       res.status(201).json({
         success: true,
         user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// all users --- for admin
+router.get(
+  "/admin-all-users",
+  isAuthenticated,
+  isAdmin("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const users = await User.find().sort({
+        createdAt: -1,
+      });
+      res.status(201).json({
+        success: true,
+        users,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// delete users --- admin
+router.delete(
+  "/delete-user/:id",
+  isAuthenticated,
+  isAdmin("Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        return next(
+          new ErrorHandler("User is not available with this id", 400)
+        );
+      }
+
+      await User.findByIdAndDelete(req.params.id);
+
+      res.status(201).json({
+        success: true,
+        message: "User deleted successfully!",
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

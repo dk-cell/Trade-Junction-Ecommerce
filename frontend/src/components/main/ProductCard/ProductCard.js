@@ -24,19 +24,18 @@ const ProductCard = ({ data, isEvent }) => {
   const { cart } = useSelector((state) => state.carts);
   const { wishlist } = useSelector((state) => state.wishlists);
   const dispatch = useDispatch();
-  console.log(data);
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   const name = data.name;
 
-  useEffect(()=>{
+  useEffect(() => {
     const isItemExist = wishlist && wishlist.find((i) => i._id == data._id);
-    if(isItemExist){
-      setClick(true)
-    }else{
-      setClick(false)
+    if (isItemExist) {
+      setClick(true);
+    } else {
+      setClick(false);
     }
-  },[click])
+  }, [click]);
 
   const handleAddToCart = (id) => {
     const isItemExist = cart && cart.find((i) => i._id == id);
@@ -54,7 +53,7 @@ const ProductCard = ({ data, isEvent }) => {
 
   const handleWishlist = (id) => {
     if (!click) {
-      console.log(data);
+
       dispatch(addToWishlist(data));
       toast.success("Item added to wishlist successfully!");
     } else {
@@ -68,7 +67,11 @@ const ProductCard = ({ data, isEvent }) => {
   return (
     <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer ">
       <div className="flex justify-end"></div>
-      <Link to={`${isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+      <Link
+        to={`${
+          isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`
+        }`}
+      >
         <img
           src={`${backendUrl}${data.images && data.images[0]}`}
           alt=""
@@ -78,7 +81,11 @@ const ProductCard = ({ data, isEvent }) => {
       <Link to={`/shop/preview/${data?.shop._id}`}>
         <h5 className={`${styles.shop_name}`}>{data?.shop.name}</h5>
       </Link>
-      <Link to={`${isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+      <Link
+        to={`${
+          isEvent ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`
+        }`}
+      >
         <h4 className="pb-3 font-[500]">
           {data.name.length > 35 ? data.name.slice(0, 35) + "..." : data.name}
         </h4>

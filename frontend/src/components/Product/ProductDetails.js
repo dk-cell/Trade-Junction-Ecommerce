@@ -20,6 +20,7 @@ import Ratings from "./Ratings";
 import axios from "axios";
 
 const ProductDetails = ({ data }) => {
+
   const { wishlist } = useSelector((state) => state.wishlists);
   const { cart } = useSelector((state) => state.carts);
   const { user, isAuthenticated } = useSelector((state) => state.user);
@@ -85,10 +86,9 @@ const ProductDetails = ({ data }) => {
       0
     );
 
-  const avg =  totalRatings / totalReviewsLength || 0;
+  const avg = totalRatings / totalReviewsLength || 0;
 
   const averageRating = avg.toFixed(2);
-
 
   const handleMessageSubmit = async () => {
     if (isAuthenticated) {
@@ -314,7 +314,7 @@ const ProductDetailsInfo = ({
             data.reviews.map((item, index) => (
               <div className="w-full flex my-2">
                 <img
-                  src={`${backendUrl}/${item.user.avatar}`}
+                  src={`${backendUrl}/${item?.user.avatar}`}
                   alt=""
                   className="w-[50px] h-[50px] rounded-full"
                 />

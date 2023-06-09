@@ -32,10 +32,6 @@ const Header = ({ activeHeader }) => {
   const [openWishlist, setWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {}, []);
-
-  console.log("=====>s", isSeller);
-
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
       setActive(true);

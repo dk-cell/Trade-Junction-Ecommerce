@@ -59,7 +59,6 @@ const OrderDetails = () => {
       });
   };
 
-  console.log(data?.status);
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>

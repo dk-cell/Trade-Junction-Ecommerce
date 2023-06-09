@@ -22,7 +22,7 @@ const ShopLogin = () => {
       )
       .then((res) => {
         toast.success("Login Succcess!!");
-        console.log(res.data);
+       
         cookies.set("seller_token", res.data.token);
         navigate("/");
         window.location.reload(true);
