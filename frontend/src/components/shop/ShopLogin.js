@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../style/styles";
 import { Link, useNavigate } from "react-router-dom";
-import { baseUrl } from "../../constant";
-import axios from "axios";
+import { API } from "../../constant";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 const ShopLogin = () => {
@@ -14,16 +13,17 @@ const ShopLogin = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
+    await API
       .post(
-        `${baseUrl}/shop/login-seller`,
+        `/shop/login-seller`,
         { email, password },
         { withCredential: true }
       )
       .then((res) => {
         toast.success("Login Succcess!!");
-       
+
         cookies.set("seller_token", res.data.token);
+        localStorage.setItem("seller_token", res.data.token);
         navigate("/");
         window.location.reload(true);
       })

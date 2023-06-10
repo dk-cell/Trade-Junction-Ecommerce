@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 
 // create product
 export const createProduct = (newForm) => async (dispatch) => {
@@ -10,11 +9,7 @@ export const createProduct = (newForm) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    const { data } = await axios.post(
-      `${baseUrl}/product/create-product`,
-      newForm,
-      config
-    );
+    const { data } = await API.post(`/product/create-product`, newForm, config);
     dispatch({
       type: "productCreateSuccess",
       payload: data.product,
@@ -34,9 +29,7 @@ export const getAllProductsOfShop = (id) => async (dispatch) => {
       type: "getAllProductsShopRequest",
     });
 
-    const { data } = await axios.get(
-      `${baseUrl}/product/get-all-products-shop/${id}`
-    );
+    const { data } = await API.get(`/product/get-all-products-shop/${id}`);
     dispatch({
       type: "getAllProductsShopSuccess",
       payload: data.products,
@@ -56,12 +49,9 @@ export const deleteProduct = (id) => async (dispatch) => {
       type: "deleteProductRequest",
     });
 
-    const { data } = await axios.delete(
-      `${baseUrl}/product/delete-shop-product/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await API.delete(`/product/delete-shop-product/${id}`, {
+      withCredentials: true,
+    });
 
     dispatch({
       type: "deleteProductSuccess",
@@ -82,7 +72,7 @@ export const getAllProducts = () => async (dispatch) => {
       type: "getAllProductsRequest",
     });
 
-    const { data } = await axios.get(`${baseUrl}/product/get-all-products`);
+    const { data } = await API.get(`/product/get-all-products`);
     dispatch({
       type: "getAllProductsSuccess",
       payload: data.products,

@@ -7,9 +7,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import styles from "../../style/styles";
 import { RxCross1 } from "react-icons/rx";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import Loader from "../../Loader";
 
 const AllUsers = () => {
@@ -23,8 +22,7 @@ const AllUsers = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    await axios
-      .delete(`${baseUrl}/user/delete-user/${id}`, { withCredentials: true })
+    await API.delete(`/user/delete-user/${id}`, { withCredentials: true })
       .then((res) => {
         toast.success(res.data.message);
       })

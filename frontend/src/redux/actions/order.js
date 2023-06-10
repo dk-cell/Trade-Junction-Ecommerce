@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 
 // get all orders of user
 export const getAllOrdersOfUser = (userId) => async (dispatch) => {
@@ -8,8 +7,8 @@ export const getAllOrdersOfUser = (userId) => async (dispatch) => {
       type: "getAllOrdersUserRequest",
     });
 
-    const { data } = await axios.get(
-      `${baseUrl}/order/get-all-orders/${userId}`
+    const { data } = await API.get(
+      `/order/get-all-orders/${userId}`
     );
 
     dispatch({
@@ -31,8 +30,8 @@ export const getAllOrdersOfShop = (shopId) => async (dispatch) => {
       type: "getAllOrdersShopRequest",
     });
 
-    const { data } = await axios.get(
-      `${baseUrl}/order/get-seller-all-orders/${shopId}`
+    const { data } = await API.get(
+      `/order/get-seller-all-orders/${shopId}`
     );
 
     dispatch({

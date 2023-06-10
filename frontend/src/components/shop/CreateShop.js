@@ -1,10 +1,9 @@
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { RxAvatar } from "react-icons/rx";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import styles from "../../style/styles";
 
 const CreateShop = () => {
@@ -32,8 +31,8 @@ const CreateShop = () => {
     newForm.append("zipCode", zipCode);
     newForm.append("address", address);
     newForm.append("phoneNumber", phoneNumber);
-    axios
-      .post(`${baseUrl}/shop/create-shop`, newForm, config)
+    API
+      .post(`/shop/create-shop`, newForm, config)
       .then((res) => {
         toast.success(res.data.message);
         setName("");

@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
 import styles from "../../style/styles";
 import { RxCross1 } from "react-icons/rx";
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { toast } from "react-toastify";
 import { getSellerDetails } from "../../redux/actions/user";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -42,14 +41,9 @@ const WithdrawMoney = () => {
 
     setPaymentMethod(false);
 
-    await axios
-      .put(
-        `${baseUrl}/shop/update-payment-methods`,
-        {
-          withdrawMethod,
-        },
-        { withCredentials: true }
-      )
+    await API.put(`/shop/update-payment-methods`, {
+      withdrawMethod,
+    })
       .then((res) => {
         toast.success("Withdraw method added successfully!");
         dispatch(getSellerDetails());
@@ -68,14 +62,12 @@ const WithdrawMoney = () => {
   };
 
   const deleteHandler = async () => {
-    await axios
-      .delete(`${baseUrl}/shop/delete-withdraw-method`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        toast.success("Withdraw method deleted successfully!");
-        dispatch(getSellerDetails());
-      });
+    await API.delete(`/shop/delete-withdraw-method`, {
+      withCredentials: true,
+    }).then((res) => {
+      toast.success("Withdraw method deleted successfully!");
+      dispatch(getSellerDetails());
+    });
   };
 
   const error = () => {
@@ -86,16 +78,13 @@ const WithdrawMoney = () => {
     if (withdrawAmount < 50 || withdrawAmount > availableBalance) {
       toast.error("You can't withdraw this amount!");
     } else {
+      setOpen(false);
       const amount = withdrawAmount;
-      await axios
-        .post(
-          `${baseUrl}/withdraw/create-withdraw-request`,
-          { amount },
-          { withCredentials: true }
-        )
-        .then((res) => {
+      await API.post(`/withdraw/create-withdraw-request`, { amount }).then(
+        (res) => {
           toast.success("Withdraw money request is successful!");
-        });
+        }
+      );
     }
   };
 

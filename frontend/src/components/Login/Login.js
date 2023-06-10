@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../style/styles";
 import { Link, useNavigate } from "react-router-dom";
-import { baseUrl } from "../../constant";
-import axios from "axios";
+import { API } from "../../constant";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 const Login = () => {
@@ -14,16 +13,12 @@ const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post(
-        `${baseUrl}/user/login-user`,
-        { email, password },
-        { withCredential: true }
-      )
+    await API.post(`/user/login-user`, { email, password })
       .then((res) => {
         toast.success("Login Succcess!!");
         console.log(res.data);
-        cookies.set("token", res.data.token);
+        cookies.set("token", res?.data.token);
+        localStorage.setItem("token", JSON.stringify(res?.data.token));
         navigate("/");
         window.location.reload(true);
       })

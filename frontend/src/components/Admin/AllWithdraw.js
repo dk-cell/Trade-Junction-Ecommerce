@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { DataGrid } from "@mui/x-data-grid";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
@@ -16,16 +15,13 @@ const AllWithdraw = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/withdraw/get-all-withdraw-request`, {
-        withCredentials: true,
-      })
+    API.get(`/withdraw/get-all-withdraw-request`)
       .then((res) => {
         setData(res.data.withdraws);
         setIsLoading(false);
       })
       .catch((error) => {
-       toast.error(error.response.data.message);
+        toast.error(error.response.data.message);
         setIsLoading(false);
       });
   }, []);
@@ -85,19 +81,17 @@ const AllWithdraw = () => {
   ];
 
   const handleSubmit = async () => {
-    await axios
-      .put(
-        `${baseUrl}/withdraw/update-withdraw-request/${withdrawData.id}`,
-        {
-          sellerId: withdrawData.shopId,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Withdraw request updated successfully!");
-        setData(res.data.withdraws);
-        setOpen(false);
-      });
+    await API.put(
+      `/withdraw/update-withdraw-request/${withdrawData.id}`,
+      {
+        sellerId: withdrawData.shopId,
+      },
+      { withCredentials: true }
+    ).then((res) => {
+      toast.success("Withdraw request updated successfully!");
+      setData(res.data.withdraws);
+      setOpen(false);
+    });
   };
 
   const row = [];

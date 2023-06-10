@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../style/styles";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { Link } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import { toast } from "react-toastify";
-import axios from "axios";
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,8 +30,7 @@ const Signup = () => {
 
     // console.log(newForm);
 
-    axios
-      .post(`${baseUrl}/user/create-user`, newForm)
+    API.post(`/user/create-user`, newForm)
       .then((res) => {
         toast.success(res.data.message);
         setName("");

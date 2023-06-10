@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 
 
 // get all users --- admin
@@ -9,7 +8,7 @@ export const getAllUsers = () => async (dispatch) => {
         type: "getAllUsersRequest",
       });
   
-      const { data } = await axios.get(`${baseUrl}/user/admin-all-users`, {
+      const { data } = await API.get(`/user/admin-all-users`, {
         withCredentials: true,
       });
   
@@ -32,7 +31,7 @@ export const getAllOrdersOfAdmin = () => async (dispatch) => {
       type: "adminAllOrdersRequest",
     });
 
-    const { data } = await axios.get(`${baseUrl}/order/admin-all-orders`, {
+    const { data } = await API.get(`/order/admin-all-orders`, {
       withCredentials: true,
     });
 
@@ -55,7 +54,7 @@ export const getAllSellers = () => async (dispatch) => {
       type: "getAllSellersRequest",
     });
 
-    const { data } = await axios.get(`${baseUrl}/shop/admin-all-sellers`, {
+    const { data } = await API.get(`/shop/admin-all-sellers`, {
       withCredentials: true,
     });
 

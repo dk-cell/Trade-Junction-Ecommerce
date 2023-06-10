@@ -1,12 +1,11 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "../../style/styles";
 import Loader from "../../Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { backendUrl, baseUrl } from "../../constant";
+import { backendUrl, API } from "../../constant";
 import { getAllProductsOfShop } from "../../redux/actions/product";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
@@ -17,26 +16,22 @@ const ShopInfo = ({ isOwner }) => {
   useEffect(() => {
     dispatch(getAllProductsOfShop(id));
     setIsLoading(true);
-    axios
-      .get(`${baseUrl}/shop/get-shop-info/${id}`)
+    API.get(`/shop/get-shop-info/${id}`)
       .then((res) => {
         setData(res.data.shop);
         setIsLoading(false);
       })
       .catch((error) => {
-       toast.error(error);
+        toast.error(error);
         setIsLoading(false);
       });
   }, []);
 
   const logoutHandler = async () => {
-    axios
-      .get(`${baseUrl}/shop/logout`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        localStorage.clear();
-      });
+    console.log("YEDSSS")
+    API.get(`/shop/logout`).then((res) => {
+      localStorage.clear();
+    });
     window.location.reload();
   };
 

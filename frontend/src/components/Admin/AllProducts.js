@@ -3,8 +3,7 @@ import { Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { useState } from "react";
 import Loader from "../../Loader";
 
@@ -13,8 +12,7 @@ const AllProducts = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/product/admin-all-products`, { withCredentials: true })
+    API.get(`/product/admin-all-products`, { withCredentials: true })
       .then((res) => {
         setData(res.data.products);
         setIsLoading(false);

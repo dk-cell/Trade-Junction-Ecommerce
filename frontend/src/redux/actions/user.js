@@ -1,6 +1,5 @@
-import axios from "axios";
-import { baseUrl } from "../../constant";
-import { useDispatch } from "react-redux";
+import { API } from "../../constant";
+import Cookies from "universal-cookie";
 
 //load user details
 
@@ -9,9 +8,7 @@ export const getUserDetails = () => async (dispatch) => {
     dispatch({
       type: "LoadUserRequest",
     });
-    const { data } = await axios.get(`${baseUrl}/user/getuser`, {
-      withCredentials: true,
-    });
+    const { data } = await API.get(`/user/getuser`);
     dispatch({
       type: "LoadUserSuccess",
       payload: data.user,
@@ -30,7 +27,7 @@ export const getSellerDetails = () => async (dispatch) => {
     dispatch({
       type: "LoadSellerRequest",
     });
-    const { data } = await axios.get(`${baseUrl}/shop/get-seller-details`, {
+    const { data } = await API.get(`/shop/get-seller-details`, {
       withCredentials: true,
     });
     dispatch({
@@ -53,8 +50,8 @@ export const updateUserInformation =
         type: "updateUserInfoRequest",
       });
 
-      const { data } = await axios.put(
-        `${baseUrl}/user/update-user-info`,
+      const { data } = await API.put(
+        `/user/update-user-info`,
         {
           email,
           password,
@@ -90,8 +87,8 @@ export const updatUserAddress =
         type: "updateUserAddressRequest",
       });
 
-      const { data } = await axios.put(
-        `${baseUrl}/user/update-user-addresses`,
+      const { data } = await API.put(
+        `/user/update-user-addresses`,
         {
           country,
           city,
@@ -125,10 +122,9 @@ export const deleteUserAddress = (id) => async (dispatch) => {
       type: "deleteUserAddressRequest",
     });
 
-    const { data } = await axios.delete(
-      `${baseUrl}/user/delete-user-address/${id}`,
-      { withCredentials: true }
-    );
+    const { data } = await API.delete(`/user/delete-user-address/${id}`, {
+      withCredentials: true,
+    });
 
     dispatch({
       type: "deleteUserAddressSuccess",

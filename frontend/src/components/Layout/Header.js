@@ -15,7 +15,7 @@ import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
 import Cart from "../cart/Cart";
 import Wishlist from "../wishlist/Wishlist";
-import { backendUrl, baseUrl } from "../../constant";
+import { backendUrl, API } from "../../constant";
 import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeader }) => {

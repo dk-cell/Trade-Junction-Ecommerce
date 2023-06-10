@@ -8,7 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllProductsOfShop } from "../../redux/actions/product";
-import { backendUrl, baseUrl } from "../../constant";
+import { API, backendUrl } from "../../constant";
 import styles from "../../style/styles";
 import {
   addToWishlist,
@@ -17,10 +17,8 @@ import {
 import { addTocart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
 import Ratings from "./Ratings";
-import axios from "axios";
 
 const ProductDetails = ({ data }) => {
-
   const { wishlist } = useSelector((state) => state.wishlists);
   const { cart } = useSelector((state) => state.carts);
   const { user, isAuthenticated } = useSelector((state) => state.user);
@@ -95,12 +93,11 @@ const ProductDetails = ({ data }) => {
       const groupTitle = data._id + user._id;
       const userId = user._id;
       const sellerId = data.shop._id;
-      await axios
-        .post(`${baseUrl}/chat/create-new-chat`, {
-          groupTitle,
-          userId,
-          sellerId,
-        })
+      await API.post(`/chat/create-new-chat`, {
+        groupTitle,
+        userId,
+        sellerId,
+      })
         .then((res) => {
           navigate(`/inbox?${res.data.chat._id}`);
         })

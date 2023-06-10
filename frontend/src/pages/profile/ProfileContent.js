@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { backendUrl, baseUrl } from "../../constant";
+import { backendUrl, API } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AiOutlineArrowRight,
@@ -18,7 +18,6 @@ import {
 } from "../../redux/actions/user";
 import { Country, State } from "country-state-city";
 import { toast } from "react-toastify";
-import axios from "axios";
 import Cookies from "universal-cookie";
 import { TbRuler2 } from "react-icons/tb";
 import { RxCross1 } from "react-icons/rx";
@@ -59,14 +58,13 @@ const ProfileContent = ({ active }) => {
 
     formData.append("image", e.target.files[0]);
 
-    await axios
-      .put(`${baseUrl}/user/update-avatar`, formData, {
-        withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-      })
+    await API.put(`/user/update-avatar`, formData, {
+      withCredentials: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => {
         window.location.reload();
       })
@@ -453,12 +451,11 @@ const UpdatePassword = () => {
   const passwordChangeHandler = async (e) => {
     e.preventDefault();
 
-    await axios
-      .put(
-        `${baseUrl}/user/update-user-password`,
-        { oldPassword, newPassword, confirmPassword },
-        { withCredentials: true }
-      )
+    await API.put(
+      `/user/update-user-password`,
+      { oldPassword, newPassword, confirmPassword },
+      { withCredentials: true }
+    )
       .then((res) => {
         toast.success(res.data.message);
         setOldPassword("");

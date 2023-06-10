@@ -1,10 +1,9 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import Loader from "../../Loader";
 import { toast } from "react-toastify";
 
@@ -12,8 +11,7 @@ const AllEvents = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    axios
-      .get(`${baseUrl}/event/admin-all-events`, { withCredentials: true })
+    API.get(`/event/admin-all-events`,)
       .then((res) => {
         setEvents(res.data.events);
         setIsLoading(false);

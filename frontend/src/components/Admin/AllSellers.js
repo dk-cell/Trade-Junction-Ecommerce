@@ -4,8 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { toast } from "react-toastify";
 import { getAllSellers } from "../../redux/actions/admin";
 import { Link } from "react-router-dom";
@@ -23,8 +22,7 @@ const AllSellers = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    await axios
-      .delete(`${baseUrl}/shop/delete-seller/${id}`, { withCredentials: true })
+    await API.delete(`/shop/delete-seller/${id}`)
       .then((res) => {
         toast.success(res.data.message);
       })

@@ -4,10 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../style/styles";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
-import { backendUrl, baseUrl } from "../../constant";
+import { backendUrl, API } from "../../constant";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 const UserOrderDetails = () => {
@@ -28,18 +27,13 @@ const UserOrderDetails = () => {
   const data = orders && orders.find((item) => item._id === id);
 
   const reviewHandler = async (e) => {
-    await axios
-      .put(
-        `${baseUrl}/product/add-new-review`,
-        {
-          user,
-          rating,
-          comment,
-          productId: selectedItem?._id,
-          orderId: id,
-        },
-        { withCredentials: true }
-      )
+    await API.put(`/product/add-new-review`, {
+      user,
+      rating,
+      comment,
+      productId: selectedItem?._id,
+      orderId: id,
+    })
       .then((res) => {
         toast.success(res.data.message);
         dispatch(getAllOrdersOfUser(user._id));
@@ -53,10 +47,9 @@ const UserOrderDetails = () => {
   };
 
   const refundHandler = async () => {
-    await axios
-      .put(`${baseUrl}/order/order-refund/${id}`, {
-        status: "Processing refund",
-      })
+    await API.put(`/order/order-refund/${id}`, {
+      status: "Processing refund",
+    })
       .then((res) => {
         toast.success(res.data.message);
         dispatch(getAllOrdersOfUser(user._id));

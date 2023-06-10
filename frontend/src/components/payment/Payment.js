@@ -11,8 +11,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { toast } from "react-toastify";
 import { RxCross1 } from "react-icons/rx";
 
@@ -83,16 +82,14 @@ const Payment = () => {
       type: "Paypal",
     };
 
-    await axios
-      .post(`${baseUrl}/order/create-order`, order, config)
-      .then((res) => {
-        setOpen(false);
-        navigate("/order/success");
-        toast.success("Order successful!");
-        localStorage.setItem("cartItems", JSON.stringify([]));
-        localStorage.setItem("latestOrder", JSON.stringify([]));
-        window.location.reload();
-      });
+    await API.post(`/order/create-order`, order, config).then((res) => {
+      setOpen(false);
+      navigate("/order/success");
+      toast.success("Order successful!");
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      localStorage.setItem("latestOrder", JSON.stringify([]));
+      window.location.reload();
+    });
   };
 
   const paymentData = {
@@ -108,11 +105,7 @@ const Payment = () => {
         },
       };
 
-      const { data } = await axios.post(
-        `${baseUrl}/payment/process`,
-        paymentData,
-        config
-      );
+      const { data } = await API.post(`/payment/process`, paymentData, config);
 
       const client_secret = data.client_secret;
 
@@ -133,16 +126,14 @@ const Payment = () => {
             type: "Credit Card",
           };
 
-          await axios
-            .post(`${baseUrl}/order/create-order`, order, config)
-            .then((res) => {
-              setOpen(false);
-              navigate("/order/success");
-              toast.success("Order successful!");
-              localStorage.setItem("cartItems", JSON.stringify([]));
-              localStorage.setItem("latestOrder", JSON.stringify([]));
-              window.location.reload();
-            });
+          await API.post(`/order/create-order`, order, config).then((res) => {
+            setOpen(false);
+            navigate("/order/success");
+            toast.success("Order successful!");
+            localStorage.setItem("cartItems", JSON.stringify([]));
+            localStorage.setItem("latestOrder", JSON.stringify([]));
+            window.location.reload();
+          });
         }
       }
     } catch (error) {
@@ -163,16 +154,14 @@ const Payment = () => {
       type: "Cash On Delivery",
     };
 
-    await axios
-      .post(`${baseUrl}/order/create-order`, order, config)
-      .then((res) => {
-        setOpen(false);
-        navigate("/order/success");
-        toast.success("Order successful!");
-        localStorage.setItem("cartItems", JSON.stringify([]));
-        localStorage.setItem("latestOrder", JSON.stringify([]));
-        window.location.reload();
-      });
+    await API.post(`/order/create-order`, order, config).then((res) => {
+      setOpen(false);
+      navigate("/order/success");
+      toast.success("Order successful!");
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      localStorage.setItem("latestOrder", JSON.stringify([]));
+      window.location.reload();
+    });
   };
 
   return (

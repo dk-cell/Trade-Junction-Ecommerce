@@ -10,16 +10,14 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { TbAddressBook } from "react-icons/tb";
 import { MdOutlineTrackChanges } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { toast } from "react-toastify";
 
 const ProfileSidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
 
   function handleLogout() {
-    axios
-      .get(`${baseUrl}/user/logout`, { withCredentials: true })
+    API.get(`/user/logout`)
       .then((res) => {
         localStorage.clear();
         toast.success(res.data.message);

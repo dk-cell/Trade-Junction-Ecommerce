@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { backendUrl, baseUrl } from "../../constant";
-import axios from "axios";
+import { backendUrl, API } from "../../constant";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
@@ -44,8 +43,8 @@ const UserInbox = () => {
   useEffect(() => {
     const getConversation = async () => {
       try {
-        const resonse = await axios.get(
-          `${baseUrl}/chat/get-all-chat-user/${user?._id}`,
+        const resonse = await API.get(
+          `/chat/get-all-chat-user/${user?._id}`,
           {
             withCredentials: true,
           }
@@ -80,8 +79,8 @@ const UserInbox = () => {
   useEffect(() => {
     const getMessage = async () => {
       try {
-        const response = await axios.get(
-          `${baseUrl}/message/get-all-messages/${currentChat?._id}`
+        const response = await API.get(
+          `/message/get-all-messages/${currentChat?._id}`
         );
         setMessages(response.data.messages);
       } catch (error) {
@@ -112,10 +111,11 @@ const UserInbox = () => {
 
     try {
       if (newMessage !== "") {
-        await axios
-          .post(`${baseUrl}/message/new-message`, message)
+        await API
+          .post(`/message/new-message`, message)
           .then((res) => {
             setMessages([...messages, res.data.message]);
+            setNewMessage("")
             updateLastMessage();
           })
           .catch((error) => {
@@ -133,8 +133,8 @@ const UserInbox = () => {
       lastMessageId: user._id,
     });
 
-    await axios
-      .put(`${baseUrl}/chat/update-last-message/${currentChat._id}`, {
+    await API
+      .put(`/chat/update-last-message/${currentChat._id}`, {
         lastMessage: newMessage,
         lastMessageId: user._id,
       })
@@ -171,8 +171,8 @@ const UserInbox = () => {
     });
 
     try {
-      await axios
-        .post(`${baseUrl}/message/new-message`, formData, {
+      await API
+        .post(`/message/new-message`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -188,7 +188,7 @@ const UserInbox = () => {
   };
 
   const updateLastMessageForImage = async () => {
-    await axios.put(`${baseUrl}/chat/update-last-message/${currentChat._id}`, {
+    await API.put(`/chat/update-last-message/${currentChat._id}`, {
       lastMessage: "Photo",
       lastMessageId: user._id,
     });
@@ -267,7 +267,7 @@ const MessageList = ({
     const userId = data.members.find((user) => user !== me);
     const getUser = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/shop/get-shop-info/${userId}`);
+        const res = await API.get(`/shop/get-shop-info/${userId}`);
         setUser(res.data.shop);
       } catch (error) {
         console.log(error);

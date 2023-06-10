@@ -4,8 +4,7 @@ import { BsFillBagFill } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersOfShop } from "../../redux/actions/order";
-import { backendUrl, baseUrl } from "../../constant";
-import axios from "axios";
+import { backendUrl, API } from "../../constant";
 import { toast } from "react-toastify";
 
 const OrderDetails = () => {
@@ -24,14 +23,9 @@ const OrderDetails = () => {
   const data = orders && orders.find((item) => item._id === id);
 
   const orderUpdateHandler = async (e) => {
-    await axios
-      .put(
-        `${baseUrl}/order/update-order-status/${id}`,
-        {
-          status,
-        },
-        { withCredentials: true }
-      )
+    await API.put(`/order/update-order-status/${id}`, {
+      status,
+    })
       .then((res) => {
         toast.success("Order updated!");
         navigate("/dashboard-orders");
@@ -42,14 +36,9 @@ const OrderDetails = () => {
   };
 
   const refundOrderUpdateHandler = async (e) => {
-    await axios
-      .put(
-        `${baseUrl}/order/order-refund-success/${id}`,
-        {
-          status,
-        },
-        { withCredentials: true }
-      )
+    await API.put(`/order/order-refund-success/${id}`, {
+      status,
+    })
       .then((res) => {
         toast.success("Order updated!");
         dispatch(getAllOrdersOfShop(seller._id));
@@ -58,7 +47,6 @@ const OrderDetails = () => {
         toast.error(error.response.data.message);
       });
   };
-
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>

@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { backendUrl, baseUrl } from "../../constant";
+import { API, backendUrl, baseUrl } from "../../constant";
 import { AiOutlineArrowLeft, AiOutlineSend } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import { TfiGallery } from "react-icons/tfi";
 import styles from "../../style/styles";
 import socketIO from "socket.io-client";
 import { format } from "timeago.js";
-const ENDPOINT = "https://tradejunction-socket-io.onrender.com/";
+const ENDPOINT = "https://tradejunction-socket-io.onrender.com";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const DashboardMessages = () => {
@@ -39,19 +38,13 @@ const DashboardMessages = () => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
-   
   }, [arrivalMessage, currentChat]);
-
-
 
   useEffect(() => {
     const getConversation = async () => {
       try {
-        const resonse = await axios.get(
-          `${baseUrl}/chat/get-all-chat-with-seller/${seller?._id}`,
-          {
-            withCredentials: true,
-          }
+        const resonse = await API.get(
+          `/chat/get-all-chat-with-seller/${seller?._id}`
         );
 
         setConversations(resonse.data.chats);
@@ -82,8 +75,8 @@ const DashboardMessages = () => {
   useEffect(() => {
     const getMessage = async () => {
       try {
-        const response = await axios.get(
-          `${baseUrl}/message/get-all-messages/${currentChat?._id}`
+        const response = await API.get(
+          `/message/get-all-messages/${currentChat?._id}`
         );
         setMessages(response.data.messages);
       } catch (error) {
@@ -115,8 +108,7 @@ const DashboardMessages = () => {
 
     try {
       if (newMessage !== "") {
-        await axios
-          .post(`${baseUrl}/message/new-message`, message)
+        await API.post(`/message/new-message`, message)
           .then((res) => {
             setMessages([...messages, res.data.message]);
             updateLastMessage();
@@ -136,11 +128,10 @@ const DashboardMessages = () => {
       lastMessageId: seller._id,
     });
 
-    await axios
-      .put(`${baseUrl}/chat/update-last-message/${currentChat._id}`, {
-        lastMessage: newMessage,
-        lastMessageId: seller._id,
-      })
+    await API.put(`/chat/update-last-message/${currentChat._id}`, {
+      lastMessage: newMessage,
+      lastMessageId: seller._id,
+    })
       .then((res) => {
         console.log(res.data.conversation);
         setNewMessage("");
@@ -175,24 +166,22 @@ const DashboardMessages = () => {
     });
 
     try {
-      await axios
-        .post(`${baseUrl}/message/new-message`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          setImages();
-          setMessages([...messages, res.data.message]);
-          updateLastMessageForImage();
-        });
+      await API.API(`/message/new-message`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        setImages();
+        setMessages([...messages, res.data.message]);
+        updateLastMessageForImage();
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
   const updateLastMessageForImage = async () => {
-    await axios.put(`${baseUrl}/chat/update-last-message/${currentChat._id}`, {
+    await API.put(`/chat/update-last-message/${currentChat._id}`, {
       lastMessage: "Photo",
       lastMessageId: seller._id,
     });
@@ -268,7 +257,7 @@ const AllMessage = ({
 
     const getUser = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/user/user-info/${userId}`);
+        const res = await API.get(`/user/user-info/${userId}`);
         setUser(res.data.user);
       } catch (error) {
         console.log(error);

@@ -1,12 +1,11 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../style/styles";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 import { toast } from "react-toastify";
 import Loader from "../../Loader";
 
@@ -26,8 +25,8 @@ const AllCoupons = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(`${baseUrl}/coupon/get-coupon/${seller._id}`, {
+    API
+      .get(`/coupon/get-coupon/${seller._id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -40,8 +39,8 @@ const AllCoupons = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    axios
-      .delete(`${baseUrl}/coupon/delete-coupon/${id}`, {
+    API
+      .delete(`/coupon/delete-coupon/${id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -53,9 +52,9 @@ const AllCoupons = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
+    await API
       .post(
-        `${baseUrl}/coupon/create-coupon-code`,
+        `/coupon/create-coupon-code`,
         {
           name,
           minAmount,

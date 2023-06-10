@@ -1,5 +1,4 @@
-import axios from "axios";
-import { baseUrl } from "../../constant";
+import { API } from "../../constant";
 
 // create event
 export const createevent = (newForm) => async (dispatch) => {
@@ -10,11 +9,7 @@ export const createevent = (newForm) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    const { data } = await axios.post(
-      `${baseUrl}/event/create-event`,
-      newForm,
-      config
-    );
+    const { data } = await API.post(`/event/create-event`, newForm, config);
     dispatch({
       type: "eventCreateSuccess",
       payload: data.event,
@@ -34,7 +29,7 @@ export const getAllEventsShop = (id) => async (dispatch) => {
       type: "getAlleventsShopRequest",
     });
 
-    const { data } = await axios.get(`${baseUrl}/event/get-all-events/${id}`);
+    const { data } = await API.get(`/event/get-all-events/${id}`);
     dispatch({
       type: "getAlleventsShopSuccess",
       payload: data.events,
@@ -54,12 +49,9 @@ export const deleteEvent = (id) => async (dispatch) => {
       type: "deleteeventRequest",
     });
 
-    const { data } = await axios.delete(
-      `${baseUrl}/event/delete-shop-event/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    const { data } = await API.delete(`/event/delete-shop-event/${id}`, {
+      withCredentials: true,
+    });
 
     dispatch({
       type: "deleteeventSuccess",
@@ -80,7 +72,7 @@ export const getAllEvents = () => async (dispatch) => {
       type: "getAlleventsRequest",
     });
 
-    const { data } = await axios.get(`${baseUrl}/event/get-all-events`);
+    const { data } = await API.get(`/event/get-all-events`);
     dispatch({
       type: "getAlleventsSuccess",
       payload: data.events,

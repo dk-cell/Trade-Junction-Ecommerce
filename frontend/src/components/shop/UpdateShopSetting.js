@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl, backendUrl } from "../../constant";
+import { API, backendUrl } from "../../constant";
 import { AiOutlineCamera } from "react-icons/ai";
 import styles from "../../style/styles";
-import axios from "axios";
 import { getSellerDetails } from "../../redux/actions/user";
 import { toast } from "react-toastify";
 
@@ -29,8 +28,8 @@ const UpdateShopSetting = () => {
 
     formData.append("image", e.target.files[0]);
 
-    await axios
-      .put(`${baseUrl}/shop/update-shop-avatar`, formData, {
+    await API
+      .put(`/shop/update-shop-avatar`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -48,9 +47,9 @@ const UpdateShopSetting = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    await axios
+    await API
       .put(
-        `${baseUrl}/shop/update-seller-info`,
+        `/shop/update-seller-info`,
         {
           name,
           address,

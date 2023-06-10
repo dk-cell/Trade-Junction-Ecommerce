@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "../constant";
+import { API } from "../constant";
 
 const ActivationPage = () => {
   const { activation_token } = useParams();
@@ -11,7 +10,7 @@ const ActivationPage = () => {
     if (activation_token) {
       const activateEmail = async () => {
         try {
-          const res = await axios.post(`${baseUrl}/user/activation`, {
+          const res = await API.post(`/user/activation`, {
             activation_token,
           });
         } catch (err) {
